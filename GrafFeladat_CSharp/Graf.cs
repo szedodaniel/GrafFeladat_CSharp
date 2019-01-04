@@ -25,6 +25,7 @@ namespace GrafFeladat_CSharp
         /// Létehoz egy úgy, N pontú gráfot, élek nélkül.
         /// </summary>
         /// <param name="csucsok">A gráf csúcsainak száma</param>
+        private List<int> bejart = new List<int>();
         public Graf(int csucsok)
         {
             this.csucsokSzama = csucsok;
@@ -35,6 +36,7 @@ namespace GrafFeladat_CSharp
                 this.csucsok.Add(new Csucs(i));
             }
         }
+        
 
         /// <summary>
         /// Hozzáad egy új élt a gráfhoz.
@@ -64,6 +66,55 @@ namespace GrafFeladat_CSharp
             elek.Add(new El(cs2, cs1));
         }
 
+    
+        
+        public void szelessegBejar(int kezdoPont) {
+        
+        
+            Queue<int> kovetkezok = new Queue<int>();
+            kovetkezok.Enqueue(kezdoPont);
+            this.bejart.Add(kezdoPont);
+
+            while(kovetkezok.Count != 0)
+            {
+                int k = kovetkezok.Dequeue();
+                Console.WriteLine(this.csucsok[k]);
+                foreach (El el in this.elek)
+	            {
+                    if(el.Csucs1 == k && this.bejart[i] == el.Csucs2)
+                        {
+                            kovetkezok.Enqueue(el.Csucs2);
+                            bejart.Add(el.Csucs2);
+                        }
+	            }
+            }
+
+        }
+        public void melysegBejar(int kezdoPont) {
+
+            Stack<int> kovetkezo = new Stack<int>();
+            kovetkezok.Push(kezdoPont);
+            this.bejart.Add(kezdoPont);
+
+            while(kovetkezok.Count != 0)
+            {
+                int k = kovetkezok.Dequeue();
+                Console.WriteLine(this.csucsok[k]);
+                foreach (El el in this.elek)
+	            {
+                    if(el.Csucs1 == k && this.bejart[i] == el.Csucs2)
+                        {
+                            kovetkezok.Push(el.Csucs2);
+                            bejart.Add(el.Csucs2);
+                        }
+	            }
+            }
+            
+            
+        }
+       
+        
+
         public override string ToString()
         {
             string str = "Csucsok:\n";
@@ -77,6 +128,7 @@ namespace GrafFeladat_CSharp
                 str += el + "\n";
             }
             return str;
-        }
+        }   
+
     }
 }
