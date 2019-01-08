@@ -19,19 +19,24 @@ namespace GrafFeladat_CSharp
             graf.Hozzaad(3, 4);
             graf.Hozzaad(4, 5);
             graf.Hozzaad(2, 4);
-            
-            graf.melysegBejar(2);
-            graf.szelessegBejar(2);
-
-
-
-
-
-
-
-
 
             Console.WriteLine(graf);
+            Console.WriteLine("\nMélységbejárás");
+            graf.melysegBejar(2);
+            Console.WriteLine("\nSzélességbejárás");
+            graf.szelessegBejar(2);
+
+            Console.WriteLine("\nGráf összefüggőség: " + graf.osszefuggo());
+            Console.WriteLine("\nFeszítőfa");
+            Console.WriteLine(graf.feszitoFa());
+
+
+
+
+
+
+
+            
             Console.ReadLine();
         }
     }

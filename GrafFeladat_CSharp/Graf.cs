@@ -25,7 +25,7 @@ namespace GrafFeladat_CSharp
         /// Létehoz egy úgy, N pontú gráfot, élek nélkül.
         /// </summary>
         /// <param name="csucsok">A gráf csúcsainak száma</param>
-        private List<int> bejart = new List<int>();
+        
         public Graf(int csucsok)
         {
             this.csucsokSzama = csucsok;
@@ -69,11 +69,11 @@ namespace GrafFeladat_CSharp
     
         
         public void szelessegBejar(int kezdoPont) {
-        
-        
+            List<int> bejart = new List<int>();
+
             Queue<int> kovetkezok = new Queue<int>();
             kovetkezok.Enqueue(kezdoPont);
-            this.bejart.Add(kezdoPont);
+            bejart.Add(kezdoPont);
 
             while(kovetkezok.Count != 0)
             {
@@ -81,7 +81,7 @@ namespace GrafFeladat_CSharp
                 Console.WriteLine(this.csucsok[k]);
                 foreach (El el in this.elek)
 	            {
-                    if(el.Csucs1 == k && this.bejart[i] == el.Csucs2)
+                    if(el.Csucs1 == k && !bejart.Contains(el.Csucs2))
                         {
                             kovetkezok.Enqueue(el.Csucs2);
                             bejart.Add(el.Csucs2);
@@ -91,18 +91,19 @@ namespace GrafFeladat_CSharp
 
         }
         public void melysegBejar(int kezdoPont) {
+            List<int> bejart = new List<int>();
 
-            Stack<int> kovetkezo = new Stack<int>();
+            Stack<int> kovetkezok = new Stack<int>();
             kovetkezok.Push(kezdoPont);
-            this.bejart.Add(kezdoPont);
+            bejart.Add(kezdoPont);
 
             while(kovetkezok.Count != 0)
             {
-                int k = kovetkezok.Dequeue();
+                int k = kovetkezok.Pop();
                 Console.WriteLine(this.csucsok[k]);
                 foreach (El el in this.elek)
 	            {
-                    if(el.Csucs1 == k && this.bejart[i] == el.Csucs2)
+                    if(el.Csucs1 == k && !bejart.Contains(el.Csucs2))
                         {
                             kovetkezok.Push(el.Csucs2);
                             bejart.Add(el.Csucs2);
@@ -111,6 +112,68 @@ namespace GrafFeladat_CSharp
             }
             
             
+        }
+
+        public bool osszefuggo()
+        {
+            List<int> bejart = new List<int>();
+            Queue<int> kovetkezok = new Queue<int>();
+            kovetkezok.Enqueue(0);
+            bejart.Add(0);
+
+            while (kovetkezok.Count != 0)
+            {
+                int k = kovetkezok.Dequeue();
+                foreach (El el in this.elek)
+                {
+                    if(el.Csucs1 == k && !bejart.Contains(el.Csucs2))
+                    {
+                        kovetkezok.Enqueue(el.Csucs2);
+                        bejart.Add(el.Csucs2);
+                    }
+                }
+
+            }
+            if(bejart.Count == this.csucsokSzama)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+            
+        }
+
+        public Graf feszitoFa()
+        {
+            Graf fa = new Graf(this.csucsokSzama);
+
+            List<int> bejart = new List<int>();
+            Queue<int> kovetkezok = new Queue<int>();
+
+            kovetkezok.Enqueue(0);
+            bejart.Add(0);
+
+            while(kovetkezok.Count != 0)
+            {
+                int k = kovetkezok.Dequeue();
+                foreach (El el in this.elek)
+                {
+                    if(el.Csucs1 == this.elek[k].Csucs1)
+                    {
+                        if (!bejart.Contains(el.Csucs2))
+                        {
+                            bejart.Add(el.Csucs2);
+                            kovetkezok.Enqueue(el.Csucs1);
+
+                            fa.Hozzaad(el.Csucs1, el.Csucs2);
+                        }
+                    }
+                }
+            }
+            return fa;
         }
        
         
